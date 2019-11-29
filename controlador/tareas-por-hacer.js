@@ -2,6 +2,7 @@ const fs=require('fs');
 
 
 let tareasPorHAcer=[];
+//funcion que permite obtener el contenido  del documento creado 
 const cargardb=()=>{
     try{
         tareasPorHAcer=require('../db/data.json');
@@ -10,20 +11,21 @@ const cargardb=()=>{
 
     }    
 }
-
+//funcion que permite crear un archivo y guardar en formato json el cual recibe una lista de objeto de la tarea
 const gruardarDb=()=>{
     let data=JSON.stringify(tareasPorHAcer);
     fs.writeFile('db/data.json',data,(err)=>{
         if (err) throw new Error('NO SE PUDO CREAR',err)
-    })
+    });
 }
-const crear=(descripcion)=>{
+//funcion que permite crear una tarea el cual recibe como parametro una decripcion de la tarea
+const crear = (descripcion)=>{
     cargardb();
     let tarea={
         descripcion,
         completado:false
     };
-
+//Una vez ya ingresada la tarea con el metodo push agregamos la tarea  aun vector
     tareasPorHAcer.push(tarea);
     gruardarDb();
     return tarea;
@@ -31,10 +33,8 @@ const crear=(descripcion)=>{
 const getlista =()=>{
     cargardb();
     return tareasPorHAcer
-//    let txt= fs.readFile('db/data.json')
-//    console.log(txt)
-
 }
+// funcion que permite actualizar la tarea como realizada el cual recibe como parametro la descripcion y el estado el cual esta por defecto como true
 const actualizar=(descripcion, completado=true)=>{
     cargardb();
     let index=tareasPorHAcer.findIndex(tarea=>tarea.descripcion===descripcion);
@@ -46,7 +46,7 @@ const actualizar=(descripcion, completado=true)=>{
     }
     return false;
 }
-
+//funcion que permite eliminar una tarea en el cual se utiliza la funcion filter el cual permite hacer un filtrado decauedo auna condicion para asi alamacenar en un nuevo vector y asi sobreescribir el documento existente, con el contenido del nuevo vector
 const eliminar=(descripcion)=>{
     cargardb();
     let nuevalista=tareasPorHAcer.filter(tarea=>tarea.descripcion!==descripcion);
@@ -60,13 +60,25 @@ const eliminar=(descripcion)=>{
         return true;
     }
 }
-
-module.exports={
-    crear
-   
+//funcion que permite en listar las tareas ralizadas para lo cual se utilizo la funcion filter
+const tareas_hechas =()=>{
+    cargardb();
+    let nuevalista=tareasPorHAcer.filter(tarea=>tarea.completado==true);
+    return nuevalista;
 }
+//funcion que permite en listar las tareas existentes por realizar para lo cual se utilizo la funcion filter
+const tareas_por_hacer =()=>{
+    cargardb();
+    let nuevalista=tareasPorHAcer.filter(tarea=>tarea.completado==false);
+    return nuevalista;
+
+}
+//este module.exports permite que las funciones exitentes dentro de esta clase sea visible al momento de ralizar la llamada de otra clase
 module.exports={
-    getlista
-    ,
-    actualizar,eliminar
+    crear,
+    getlista,
+    actualizar,
+    eliminar,
+    tareas_hechas,
+    tareas_por_hacer
 }
