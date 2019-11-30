@@ -23,7 +23,7 @@ const crear = (descripcion)=>{
     cargardb();
     let tarea={
         descripcion,
-        completado:false
+        completado:"false"
     };
 //Una vez ya ingresada la tarea con el metodo push agregamos la tarea  aun vector
     tareasPorHAcer.push(tarea);
@@ -60,25 +60,24 @@ const eliminar=(descripcion)=>{
         return true;
     }
 }
-//funcion que permite en listar las tareas ralizadas para lo cual se utilizo la funcion filter
-const tareas_hechas =()=>{
+//funcion que permite en listar las tareas ralizadas y laas tarea pendients, recibe el estado true o fal como enteada,dentro de esta se utilizo la funcion filter
+const tareas =(estado)=>{
+    
+    if(estado==="true"){
+        console.log("=====TAREAS HECHAS ======".blue);    
+    }else{
+        console.log("=====TAREAS POR HACER ======".blue);
+    }
     cargardb();
-    let nuevalista=tareasPorHAcer.filter(tarea=>tarea.completado==true);
+    let nuevalista=tareasPorHAcer.filter(tarea=>tarea.completado==estado);
     return nuevalista;
 }
-//funcion que permite en listar las tareas existentes por realizar para lo cual se utilizo la funcion filter
-const tareas_por_hacer =()=>{
-    cargardb();
-    let nuevalista=tareasPorHAcer.filter(tarea=>tarea.completado==false);
-    return nuevalista;
 
-}
 //este module.exports permite que las funciones exitentes dentro de esta clase sea visible al momento de ralizar la llamada de otra clase
 module.exports={
     crear,
     getlista,
     actualizar,
     eliminar,
-    tareas_hechas,
-    tareas_por_hacer
+    tareas
 }

@@ -6,10 +6,11 @@ const descripcion={
     desc:"Descripcion de la tarea por hacer"
 };
 const completado={
-    default:true,
+    default:"true",
     alias:'c',
     desc:"marca como completada o pendiente "
-}
+};
+
 
 const argv=require('yargs')
 .command('crear', 'crear una tarea',{
@@ -26,13 +27,11 @@ const argv=require('yargs')
    
        
    })
-   .command('hechas', 'muestra todas la tareas realizadas',{ //agregando el comando para mostra las tareas ya hechas
-    
+   .command('tareas', 'muestra todas la tareas realizadas y tareas por realizar',{ //agregando el comando para mostra las tareas ya hechas
+    completado
        
    })
-   .command('por_hacer', 'muestra todas las tareas por realizar',{//agregando el comando para mostrar las tareas aun por hacer
-           
-   })
+   
 .help()
 .argv;
 

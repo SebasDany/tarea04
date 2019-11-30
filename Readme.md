@@ -2,66 +2,46 @@
 #                       CARRERA COMPUTACIÓN
 #                         PLATAFORMAS WEB
 
-# NOMBRE: SEBASTIAN GUANDINANGO
+## NOMBRE: SEBASTIAN GUANDINANGO
 
 
-# 1 Implementacion de las funciones que nos permita ver ya sea las tareas realizadas y las tareas aun por hacer para esto se creo dos metodo dentro la clase tareas-por-hacer.js el cual nos quedo de la siguiente manera:
-
-//funcion que permite en listar las tareas ralizadas para lo cual se utilizo la funcion filter
-const tareas_hechas =()=>{
+## 1 Implementacion de las funciones que nos permita ver ya sea las tareas realizadas y las tareas aun por hacer para esto se creo dos metodo dentro la clase tareas-por-hacer.js el cual nos quedo de la siguiente manera:
+//funcion que permite en listar las tareas ralizadas y laas tarea pendients, recibe el estado true o fal como enteada,dentro de esta se utilizo la funcion filter
+const tareas =(estado)=>{
+    console.log(estado)
+    console.log(estado===true)
+    if(estado==="true"){
+        console.log("=====TAREAS HECHAS ======".blue);    
+    }else{
+        console.log("=====TAREAS POR HACER ======".blue);
+    }
     cargardb();
-    let nuevalista=tareasPorHAcer.filter(tarea=>tarea.completado==true);
+    let nuevalista=tareasPorHAcer.filter(tarea=>tarea.completado==estado);
     return nuevalista;
 }
-//funcion que permite en listar las tareas existentes por realizar para lo cual se utilizo la funcion filter
-const tareas_por_hacer =()=>{
-    cargardb();
-    let nuevalista=tareasPorHAcer.filter(tarea=>tarea.completado==false);
-    return nuevalista;
 
-}
+## Una ves realizada los metodos dentro de la clase yargs.js se aumento los parametros para los comandos como se puede observar:
 
-# Una ves realizada los metodos dentro de la clase yargs,js se aumento los parametros para los comandos como se puede observar:
-
-.command('hechas', 'muestra todas la tareas realizadas',{ //agregando el comando para mostra las tareas ya hechas
-    
+.command('tareas', 'muestra todas la tareas realizadas y tareas por realizar',{ //agregando el comando para mostra las tareas ya hechas
+    completado
        
    })
-   .command('por_hacer', 'muestra todas las tareas por realizar',{//agregando el comando para mostrar las tareas aun por hacer
-           
-   })
 
+   ## Y para finalizar dentro de la clase app.js se hizo el llamdo alos metodos para poder ejecutalos el cual nos queda de la siguiente manera.
 
-   # Y para finalizar dentro de la clase app.js se hizo el llamdo alos metodos para poder ejecutalos el cual nos queda de la siguiente manera.
-
-    case 'hechas':
-        //console.log('borrar elemento')
-        let tarea_hecha=tareas.tareas_hechas();
-        if (tarea_hecha.length!==0){
-            console.log("=====TAREAS HECHAS ======".bgCyan);
+   case 'tareas':
+        let tarea_hecha=tareas.tareas(argv.completado);
+        if (tarea_hecha.length>0){
             for(let tarea of tarea_hecha){
                 console.log("Tarea:\t",tarea.descripcion);
                 console.log("Estado:\t",tarea.completado);
             }
         }else{
-                console.log("=====NO HAY TAREAS HECHAS ======".red);
-            }
-        break;
-    
-    case 'por_hacer':
-        let tarea_hacer=tareas.tareas_por_hacer();
-        if (tarea_hacer.length!==0){
-            console.log("=====TAREAS POR HACER ======".bgCyan);
-            for(let tarea of tarea_hacer){
-                console.log("Tarea:\t",tarea.descripcion);
-                console.log("Estado:\t",tarea.completado);
-            }
-        }else{
-                console.log("=====NO HAY TAREAS POR HACER ======".red);
-            }
+            console.log("===== CERO ======".red);
+        }
         break;
 
-# Resultado
+## Resultado
 
 =====TAREAS HECHAS ======
 Tarea:   Ir de compras
@@ -72,3 +52,17 @@ Estado:  true
 =====TAREAS POR HACER ======
 Tarea:   Hacer deporte
 Estado:  false
+
+## Detalle de la aplicacion
+
+Dentro de esta aplicacion se han realizado la implmentacion de la funcion que nos permita realizar una busqueda de la tareas realizada y las tareas por hacer para lo cual se debe ejecutar de la siguinte manera:
+
+## Comandos
+Permite crear uan tarea:          node app crear -d "Ir de compras" 
+Permite enlistar las tareas:      node app listar
+Permite actualizar una tarea :    node app actualizar -d "Ir de compras"
+Permite eliminar una tarea:       node app borrar -d "Ir de compras"
+Permite ver tareas hechas:        node app tareas -c true
+Permite ver las tareas por hacer: node app tareas -c false
+ 
+Estas dos ultimas consulatas si no se le asigna un valor  por defecto enlista las tareas ya realizadas 

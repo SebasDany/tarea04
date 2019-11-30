@@ -10,13 +10,12 @@ switch (comando){
         break;
     case 'listar':
         let listado=tareas.getlista();
+        console.log("=====LISTADO DE TAREAS ======".green);
         for(let tarea of listado){
-            console.log("=====POR HACER ======".green);
-            console.log(tarea.descripcion);
-            console.log("estado: ",tarea.completado);
+           
+            console.log("Descripcion:\t",tarea.descripcion);
+            console.log("Estado: \t",tarea.completado);
         }
-
-            console.log('listar tareas');
         break;
     case 'actualizar':
         let actualizado= tareas.actualizar(argv.descripcion,argv.completado)
@@ -26,32 +25,18 @@ switch (comando){
         //console.log('borrar elemento')
         tareas.eliminar(argv.descripcion);
         break;
-    case 'hechas':
-        //console.log('borrar elemento')
-        let tarea_hecha=tareas.tareas_hechas();
-        if (tarea_hecha.length!==0){
-            console.log("=====TAREAS HECHAS ======".bgCyan);
+    case 'tareas':
+        let tarea_hecha=tareas.tareas(argv.completado);
+        if (tarea_hecha.length>0){
             for(let tarea of tarea_hecha){
                 console.log("Tarea:\t",tarea.descripcion);
                 console.log("Estado:\t",tarea.completado);
             }
         }else{
-                console.log("=====NO HAY TAREAS HECHAS ======".red);
-            }
+            console.log("===== CERO ======".red);
+        }
         break;
     
-    case 'por_hacer':
-        let tarea_hacer=tareas.tareas_por_hacer();
-        if (tarea_hacer.length!==0){
-            console.log("=====TAREAS POR HACER ======".bgCyan);
-            for(let tarea of tarea_hacer){
-                console.log("Tarea:\t",tarea.descripcion);
-                console.log("Estado:\t",tarea.completado);
-            }
-        }else{
-                console.log("=====NO HAY TAREAS POR HACER ======".red);
-            }
-        break;
     default:
         console.log("comando no conocido");
 
