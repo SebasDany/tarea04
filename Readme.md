@@ -58,11 +58,11 @@ Estado:  false
 Dentro de esta aplicacion se han realizado la implmentacion de la funcion que nos permita realizar una busqueda de la tareas realizada y las tareas por hacer para lo cual se debe ejecutar de la siguinte manera:
 
 ## Comandos
-Permite crear uan tarea:          node app crear -d "Ir de compras" 
-Permite enlistar las tareas:      node app listar
-Permite actualizar una tarea :    node app actualizar -d "Ir de compras"
-Permite eliminar una tarea:       node app borrar -d "Ir de compras"
-Permite ver tareas hechas:        node app tareas -c true
-Permite ver las tareas por hacer: node app tareas -c false
+### Permite crear uan tarea:          node app crear -d "Ir de compras" 
+### Permite enlistar las tareas:      node app listar
+### Permite actualizar una tarea :    node app actualizar -d "Ir de compras"
+### Permite eliminar una tarea:       node app borrar -d "Ir de compras"
+### Permite ver tareas hechas:        node app tareas -c true
+### Permite ver las tareas por hacer: node app tareas -c false
  
-Estas dos ultimas consulatas si no se le asigna un valor  por defecto enlista las tareas ya realizadas 
+### Estas dos ultimas consulatas si no se le asigna un valor  por defecto enlista las tareas ya realizadas 
